@@ -35,22 +35,39 @@ namespace ScrableScore.Models
       {'z', 10}
     };
 
-    public string ScoreTotal;
+    public string Response;
 
     public char[] SplitWord(string input)
     {
-      char[] splitInput = input.ToCharArray();
+      string lowerInput = input.ToLower();
+      char[] splitInput = lowerInput.ToCharArray();
       return splitInput;
     }
 
     public void ValueScore(char[] splitInput)
     {
       int score = 0;
+      bool isValid = true;
       foreach(char element in splitInput)
       {
-        score = score + scoreKey[element];
+        if (scoreKey.ContainsKey(element))
+        {
+          score = score + scoreKey[element];
+        }
+        else
+        {
+          isValid = false;
+        }
       }
-      ScoreTotal = score.ToString();
+
+      if (isValid)
+      {
+        Response = score.ToString();
+      }
+      else
+      {
+        Response = "INVALID INPUT!";
+      }
     }
   }
 }
